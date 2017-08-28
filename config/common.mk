@@ -84,6 +84,9 @@ include vendor/lluvia/config/bootanimation.mk
 # GSans font
 include vendor/lluvia/config/fonts.mk
 
+# Pixel sounds
+include vendor/lluvia/config/sounds.mk
+
 # Packages
 include vendor/lluvia/config/packages.mk
 
