@@ -133,6 +133,10 @@ PRODUCT_PACKAGES += \
     turbo.xml \
     privapp-permissions-turbo.xml
 
+# Fonts
+PRODUCT_PACKAGES += \
+    CustomFonts
+
 # Extra tools
 PRODUCT_PACKAGES += \
     e2fsck \
