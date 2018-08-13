@@ -51,8 +51,14 @@ PRODUCT_PACKAGES += \
     Stk \
     Turbo \
     WallpaperPickerGoogle \
+    MarkupGoogle
     OmniJaws \
     OmniStyle
+
+# Markup libs
+PRODUCT_COPY_FILES += \
+    vendor/lluvia/prebuilt/common/lib/libsketchology_native.so:system/lib/libsketchology_native.so \
+    vendor/lluvia/prebuilt/common/lib64/libsketchology_native.so:system/lib64/libsketchology_native.so
 
 # Extra tools
 PRODUCT_PACKAGES += \
@@ -134,21 +140,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_GENERIC_PROPERTIES += \
     media.recorder.show_manufacturer_and_model=true
 
-<<<<<<< HEAD
-# Charging sounds
-PRODUCT_COPY_FILES += \
-    vendor/lluvia/google/effects/BatteryPlugged.ogg:system/media/audio/ui/BatteryPlugged.ogg \
-    vendor/lluvia/google/effects/BatteryPlugged_48k.ogg:system/media/audio/ui/BatteryPlugged_48k.ogg
-
-# DU Utils Library
-PRODUCT_PACKAGES += \
-    org.dirtyunicorns.utils
-
-PRODUCT_BOOT_JARS += \
-    org.dirtyunicorns.utils
-
-=======
->>>>>>> 1f847446... Initial clean up for P
 # Needed by some RILs and for some gApps packages
 PRODUCT_PACKAGES += \
     librsjni \
@@ -162,16 +153,8 @@ PRODUCT_PACKAGES += \
 USE_DEX2OAT_DEBUG ?= false
 
 # Include SDCLANG definitions if it is requested and available
-<<<<<<< HEAD
-ifeq ($(HOST_OS),linux)
-    ifneq ($(wildcard vendor/qcom/sdclang-4.0/),)
-        include vendor/lluvia/sdclang/sdclang.mk
-    endif
-endif
-=======
 #ifeq ($(HOST_OS),linux)
 #    ifneq ($(wildcard vendor/qcom/sdclang-4.0/),)
-#        include vendor/aosp/sdclang/sdclang.mk
+#        include vendor/lluvia/sdclang/sdclang.mk
 #    endif
 #endif
->>>>>>> 1f847446... Initial clean up for P
