@@ -46,7 +46,6 @@ endif
 PRODUCT_PACKAGES += \
     Terminal \
     LatinIME \
-    Launcher3 \
     LiveWallpapers \
     LiveWallpapersPicker \
     Stk \
@@ -54,54 +53,6 @@ PRODUCT_PACKAGES += \
     WallpaperPickerGoogle \
     OmniJaws \
     OmniStyle
-
-# Themes
-# Accents
-PRODUCT_PACKAGES += \
-    PixelTheme \
-    AmberAccent \
-    BlueAccent \
-    BlueGreyAccent \
-    BrownAccent \
-    CyanAccent \
-    CandyRedAccent \
-    DeepOrangeAccent \
-    DeepPurpleAccent \
-    ExtendedGreenAccent \
-    GreenAccent \
-    GreyAccent \
-    IndigoAccent \
-    JadeGreenAccent \
-    LightBlueAccent \
-    LightGreenAccent \
-    LimeAccent \
-    OrangeAccent \
-    PaleBlueAccent \
-    PaleRedAccent \
-    PinkAccent \
-    PurpleAccent \
-    RedAccent \
-    TealAccent \
-    YellowAccent
-
-# UI Variants
-PRODUCT_PACKAGES += \
-    SystemDarkTheme \
-    SettingsDarkTheme \
-    DuiDarkTheme \
-    SystemBlackTheme \
-    SettingsBlackTheme \
-    DuiBlackTheme \
-    ContactsThemeBlack \
-    DialerThemeBlack \
-    FilesThemeBlack \
-    ContactsThemeDark \
-    DialerThemeDark \
-    FilesThemeDark \
-
-# Fonts
-PRODUCT_PACKAGES += \
-    CustomFonts
 
 # Extra tools
 PRODUCT_PACKAGES += \
@@ -183,6 +134,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_GENERIC_PROPERTIES += \
     media.recorder.show_manufacturer_and_model=true
 
+<<<<<<< HEAD
 # Charging sounds
 PRODUCT_COPY_FILES += \
     vendor/lluvia/google/effects/BatteryPlugged.ogg:system/media/audio/ui/BatteryPlugged.ogg \
@@ -195,6 +147,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     org.dirtyunicorns.utils
 
+=======
+>>>>>>> 1f847446... Initial clean up for P
 # Needed by some RILs and for some gApps packages
 PRODUCT_PACKAGES += \
     librsjni \
@@ -208,8 +162,16 @@ PRODUCT_PACKAGES += \
 USE_DEX2OAT_DEBUG ?= false
 
 # Include SDCLANG definitions if it is requested and available
+<<<<<<< HEAD
 ifeq ($(HOST_OS),linux)
     ifneq ($(wildcard vendor/qcom/sdclang-4.0/),)
         include vendor/lluvia/sdclang/sdclang.mk
     endif
 endif
+=======
+#ifeq ($(HOST_OS),linux)
+#    ifneq ($(wildcard vendor/qcom/sdclang-4.0/),)
+#        include vendor/aosp/sdclang/sdclang.mk
+#    endif
+#endif
+>>>>>>> 1f847446... Initial clean up for P
