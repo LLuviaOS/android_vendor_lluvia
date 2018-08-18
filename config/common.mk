@@ -53,7 +53,8 @@ PRODUCT_PACKAGES += \
     WallpaperPickerGoogle \
     MarkupGoogle
     OmniJaws \
-    OmniStyle
+    OmniStyle \
+    WellbeingPrebuilt
 
 # Markup libs
 PRODUCT_COPY_FILES += \
