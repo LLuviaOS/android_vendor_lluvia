@@ -49,7 +49,6 @@ PRODUCT_PACKAGES += \
     LiveWallpapers \
     LiveWallpapersPicker \
     Stk \
-    Turbo \
     WallpaperPickerGoogle \
     MarkupGoogle
     OmniJaws \
@@ -107,6 +106,11 @@ PRODUCT_COPY_FILES += \
 # Pixel sysconfig
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/sysconfig/pixel.xml:system/etc/sysconfig/pixel.xml
+
+# Turbo
+PRODUCT_PACKAGES += \
+    Turbo \
+    turbo.xml
 
 # Extra tools
 PRODUCT_PACKAGES += \
