@@ -26,9 +26,11 @@ $(call inherit-product-if-exists, vendor/lluvia/config/ota.mk)
 
 endif
 
+TARGET_PRODUCT_SHORT := $(subst lluvia_,,$(CUSTOM_BUILD))
+
 LLUVIA_BUILD_DATE := $(shell date -u +%Y%m%d-%H%M)
 LLUVIA_MOD_VERSION := LLuviaOS-$(LLUVIA_VERSION)-$(LLUVIA_BUILD_DATE)-$(LLUVIA_BUILD_TYPE)
-
+LLUVIA_FINGERPRINT := LLuviaOS/$(LLUVIA_VERSION)/$(PLATFORM_VERSION)/$(TARGET_PRODUCT_SHORT)/$(LLUVIA_BUILD_DATE)
 
 PRODUCT_GENERIC_PROPERTIES += \
   ro.lluvia.version=$(LLUVIA_VERSION) \
@@ -38,4 +40,5 @@ PRODUCT_GENERIC_PROPERTIES += \
 LLUVIA_DISPLAY_VERSION := LLuviaOS-$(LLUVIA_VERSION)-$(LLUVIA_BUILD_TYPE)
 
 PRODUCT_GENERIC_PROPERTIES += \
-  ro.lluvia.display.version=$(LLUVIA_DISPLAY_VERSION)
+  ro.lluvia.display.version=$(LLUVIA_DISPLAY_VERSION) \
+  ro.lluvia.fingerprint=$(LLUVIA_FINGERPRINT)
