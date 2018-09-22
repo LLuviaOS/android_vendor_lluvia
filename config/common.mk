@@ -56,6 +56,49 @@ PRODUCT_PACKAGES += \
     OmniStyle \
     WellbeingPrebuilt
 
+# Themes
+# Accents
+PRODUCT_PACKAGES += \
+    PixelTheme \
+    AmberAccent \
+    BlueAccent \
+    BlueGreyAccent \
+    BrownAccent \
+    CyanAccent \
+    CandyRedAccent \
+    DeepOrangeAccent \
+    DeepPurpleAccent \
+    GreenAccent \
+    GreyAccent \
+    IndigoAccent \
+    JadeGreenAccent \
+    LightBlueAccent \
+    LightGreenAccent \
+    LimeAccent \
+    OrangeAccent \
+    PaleBlueAccent \
+    PaleRedAccent \
+    PinkAccent \
+    PurpleAccent \
+    RedAccent \
+    TealAccent \
+    YellowAccent
+
+# UI Variants
+PRODUCT_PACKAGES += \
+    SystemDarkTheme \
+    SettingsDarkTheme \
+    SystemUIDarkTheme \
+    SystemBlackTheme \
+    SettingsBlackTheme \
+    SystemUIBlackTheme \
+    ContactsThemeBlack \
+    DialerThemeBlack \
+    FilesThemeBlack \
+    ContactsThemeDark \
+    DialerThemeDark \
+    FilesThemeDark 
+
 # Markup libs
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/lib/libsketchology_native.so:system/lib/libsketchology_native.so \
