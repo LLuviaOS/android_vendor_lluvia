@@ -112,6 +112,13 @@ PRODUCT_PACKAGES += \
     DialerThemeDark \
     FilesThemeDark 
 
+# QS tile styles
+PRODUCT_PACKAGES += \
+    QStilesDefault \
+    QStilesCircleTrim \
+    QStilesSquircleTrim \
+    QStilesTwoToneCircle
+
 # Markup libs
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/lib/libsketchology_native.so:system/lib/libsketchology_native.so \
