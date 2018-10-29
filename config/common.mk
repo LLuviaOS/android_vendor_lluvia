@@ -58,7 +58,12 @@ PRODUCT_PACKAGES += \
     OmniJaws \
     OmniStyle \
     WellbeingPrebuilt \
-    Recorder
+    Recorder \
+    WeatherClient
+
+# Weather
+PRODUCT_COPY_FILES += \
+    vendor/lluvia/prebuilt/common/etc/permissions/org.pixelexperience.weather.client.xml:system/etc/permissions/org.pixelexperience.weather.client.xml
 
 # Themes
 # Accents
