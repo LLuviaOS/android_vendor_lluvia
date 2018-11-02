@@ -33,6 +33,10 @@ endif
 # Bootanimation
 $(call inherit-product, vendor/lluvia/config/bootanimation.mk)
 
+# priv-app permissions
+PRODUCT_COPY_FILES += \
+    vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-aex.xml:system/etc/permissions/privapp-permissions-lluvia.xml
+
 DEVICE_PACKAGE_OVERLAYS += \
     vendor/lluvia/overlay/common \
     vendor/lluvia/overlay/dictionaries
