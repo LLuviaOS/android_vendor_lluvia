@@ -50,10 +50,11 @@ PRODUCT_PACKAGES += \
     LiveWallpapersPicker \
     Stk \
     WallpaperPickerGoogle \
-    MarkupGoogle
+    MarkupGoogle \
     OmniJaws \
     OmniStyle \
-    WellbeingPrebuilt
+    WellbeingPrebuilt \
+    Recorder
 
 # Themes
 # Accents
