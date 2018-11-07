@@ -62,6 +62,9 @@ PRODUCT_PACKAGES += \
     WeatherClient
 
 # Weather
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.lluvia.weather.revision=2
+
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/permissions/org.pixelexperience.weather.client.xml:system/etc/permissions/org.pixelexperience.weather.client.xml
 
