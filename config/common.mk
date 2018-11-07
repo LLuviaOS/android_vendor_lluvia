@@ -75,7 +75,8 @@ PRODUCT_PACKAGES += \
     OmniStyle \
     WellbeingPrebuilt \
     Recorder \
-    WeatherClient
+    WeatherClient \
+    SubstratumKey
 
 
 PRODUCT_COPY_FILES += \
