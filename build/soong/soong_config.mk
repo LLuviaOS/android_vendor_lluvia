@@ -14,6 +14,7 @@ $(call add_json_bool, Device_support_hwfde_perf, $(filter true,$(TARGET_HW_DISK_
 $(call add_json_bool, Device_support_legacy_hwfde, $(filter true,$(TARGET_LEGACY_HW_DISK_ENCRYPTION)))
 $(call add_json_bool, Device_support_wait_for_qsee, $(filter true,$(TARGET_KEYMASTER_WAIT_FOR_QSEE)))
 $(call add_json_str,  Target_shim_libs,                      $(TARGET_LD_SHIM_LIBS))
+$(call add_json_bool, Apply_msm8974_1440p_egl_workaround, $(filter true,$(TARGET_MSM8974_1440P_EGL_WORKAROUND)))
 $(call add_json_bool, Uses_generic_camera_parameter_library, $(if $(TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY),,true))
 $(call add_json_bool, Uses_nvidia_enhancements,              $(filter TRUE,$(NV_ANDROID_FRAMEWORK_ENHANCEMENTS)))
 $(call add_json_bool, Uses_qcom_bsp_legacy,                  $(filter true,$(TARGET_USES_QCOM_BSP_LEGACY)))
