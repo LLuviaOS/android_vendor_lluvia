@@ -18,6 +18,11 @@ PRODUCT_PACKAGES += \
     QStilesTearDrop \
     QStilesDroplet
 
+# Cutout control overlays
+PRODUCT_PACKAGES += \
+    HideCutout \
+    StatusBarStock
+
 # Markup libs
 ifeq ($(TARGET_ARCH),arm64)
 PRODUCT_COPY_FILES += \
