@@ -40,7 +40,11 @@ DEVICE_PACKAGE_OVERLAYS += \
     vendor/lluvia/overlay/common \
     vendor/lluvia/overlay/dictionaries
 
-# Custom lluvia packages
+# Power whitelist
+PRODUCT_COPY_FILES += \
+    vendor/lluvia/prebuilt/common/etc/permissions/aex-power-whitelist.xml:system/etc/sysconfig/lluvia-power-whitelist.xml
+
+# Custom AEX packages
 ifeq ($(TARGET_USE_GCAM),true)
 PRODUCT_PACKAGES += \
     Gcam
