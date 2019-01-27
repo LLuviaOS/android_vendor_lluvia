@@ -1,4 +1,7 @@
-for combo in $(curl -s https://raw.githubusercontent.com/LLuviaOS/android_vendor_lluvia/3.0/lluvia.devices | sed -e 's/#.*$//' | awk '{printf "lluvia_%s\n", $1, $2}')
+for device in $(python vendor/lluvia/tools/get_official_devices.py)
 do
-    add_lunch_combo $combo-userdebug;
+for var in eng user userdebug; do
+add_lunch_combo lluvia_$device-$var
 done
+done
+
