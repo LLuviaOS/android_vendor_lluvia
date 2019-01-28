@@ -44,7 +44,7 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/permissions/aex-power-whitelist.xml:system/etc/sysconfig/lluvia-power-whitelist.xml
 
-# Custom AEX packages
+# Custom packages
 ifeq ($(TARGET_USE_GCAM),true)
 PRODUCT_PACKAGES += \
     Gcam
@@ -200,9 +200,9 @@ PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/lib/libjni_latinimegoogle.so:system/lib/libjni_latinimegoogle.so
 endif
 
-# lluvia-specific init file
-PRODUCT_COPY_FILES += \
-    vendor/lluvia/prebuilt/common/etc/init.local.rc:root/init.lluvia.rc
+# LLUVIA-specific init files
+$(foreach f,$(wildcard vendor/lluvia/prebuilt/common/etc/init/*.rc),\
+    $(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
 
 # Bring in camera effects
 PRODUCT_COPY_FILES +=  \
