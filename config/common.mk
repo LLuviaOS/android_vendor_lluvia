@@ -116,9 +116,11 @@ PRODUCT_PACKAGES += \
     ContactsThemeBlack \
     DialerThemeBlack \
     FilesThemeBlack \
+    WellbeingBlackTheme \
     ContactsThemeDark \
     DialerThemeDark \
-    FilesThemeDark 
+    FilesThemeDark \
+    WellbeingDarkTheme 
 
 # QS tile styles
 PRODUCT_PACKAGES += \
