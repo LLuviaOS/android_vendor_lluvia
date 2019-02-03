@@ -36,7 +36,7 @@ if [ ! -r $S/build.prop ]; then
   echo "Backup/restore is not possible. Partition is probably empty"
   return 1
 fi
-if ! grep -q "^ro.aosip.version=$V.*" $S/build.prop $S/etc/prop.default; then
+if ! grep -q "^ro.lluvia.version=$V.*" $S/build.prop $S/etc/prop.default; then
   echo "Backup/restore is not possible. Incompatible ROM version: $V"
   return 2
 fi
