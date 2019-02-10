@@ -95,6 +95,7 @@ PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/lib/content-types.properties:system/lib/content-types.properties
 
 # Enable SIP+VoIP on all targets
+PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
 
 # Enable wireless Xbox 360 controller support
