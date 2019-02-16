@@ -31,6 +31,9 @@ ifeq ($(LLUVIA_BUILD_TYPE), OFFICIAL)
 	PRODUCT_GENERIC_PROPERTIES += \
     		ro.lluvia.buildtype=NatureMade
 
+PRODUCT_PACKAGES += \
+        Updates
+	
     endif
     ifneq ($(LLUVIA_BUILD_TYPE), NatureMade)
 	LLUVIA_BUILD_TYPE := ManMade
@@ -63,8 +66,5 @@ endif
 
 PRODUCT_GENERIC_PROPERTIES += \
   ro.lluviaos.ota.version_code=$(CUSTOM_OTA_VERSION_CODE)
-
-PRODUCT_PACKAGES += \
-        Updates
 
 endif
