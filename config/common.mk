@@ -1,47 +1,3 @@
-PRODUCT_BRAND ?= LLuvia
-
-LLUVIA_VERSION_NUMBER := v3.0
-
-ifndef LLUVIA_BUILD_TYPE
-LLUVIA_BUILD_TYPE := ManMade
-
-PRODUCT_GENERIC_PROPERTIES += \
-    ro.lluvia.buildtype=ManMade
-endif
-
-ifeq ($(LLUVIA_BUILD_TYPE), OFFICIAL)
-    LIST = $(shell curl -s https://raw.githubusercontent.com/LLuviaOS/android_vendor_lluvia/3.0/lluvia.devices)
-    FOUND_DEVICE =  $(filter $(CURRENT_DEVICE), $(LIST))
-    ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
-	LLUVIA_BUILD_TYPE := NatureMade
-	PRODUCT_GENERIC_PROPERTIES += \
-    		ro.lluvia.buildtype=NatureMade
-
-PRODUCT_PACKAGES += \
-    Updater
-
-    endif
-    ifneq ($(LLUVIA_BUILD_TYPE), NatureMade)
-	LLUVIA_BUILD_TYPE := ManMade
-        $(error Device is not official "$(FOUND)")
-    endif
-endif
-
-LLUVIA_MOD_VERSION := Crystal
-LLUVIA_VERSION := LLuviaOS-$(LLUVIA_VERSION_NUMBER)-$(LLUVIA_MOD_VERSION)-$(LLUVIA_BUILD)-$(LLUVIA_BUILD_TYPE)-$(shell date -u +%Y%m%d)
-
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
-
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.lluvia.version=$(LLUVIA_VERSION) \
-  ro.lluvia.releasetype=$(LLUVIA_BUILD_TYPE) \
-  ro.modversion=$(LLUVIA_MOD_VERSION)
-
-LLUVIA_DISPLAY_VERSION := $(LLUVIA_VERSION)
-
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.lluvia.display.version=$(LLUVIA_DISPLAY_VERSION)
-
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     sys.use_fifo_ui=1
 
@@ -208,5 +164,7 @@ endif
 -include vendor/lluvia/config/partner_gms.mk
 
 include vendor/lluvia/config/lluvia_main.mk
+include vendor/lluvia/config/lluvia_version.mk
+
 
 $(call inherit-product-if-exists, vendor/extra/product.mk)
