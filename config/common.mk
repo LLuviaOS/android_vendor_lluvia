@@ -64,8 +64,19 @@ include vendor/lluvia/config/twrp.mk
 endif
 
 # Bootanimation
-PRODUCT_COPY_FILES += \
-    vendor/lluvia/media/bootanimation.zip:system/media/bootanimation.zip
+ifeq ($(TARGET_BOOT_ANIMATION_RES),720)
+     PRODUCT_COPY_FILES += vendor/lluvia/media/bootanimation/720p.zip:system/media/bootanimation.zip
+else ifeq ($(TARGET_BOOT_ANIMATION_RES),1080)
+     PRODUCT_COPY_FILES += vendor/lluvia/media/bootanimation/bootanimation.zip:system/media/bootanimation.zip
+else ifeq ($(TARGET_BOOT_ANIMATION_RES),1440)
+     PRODUCT_COPY_FILES += vendor/lluvia/media/bootanimation/1440.zip:system/media/bootanimation.zip
+else ifeq ($(TARGET_BOOT_ANIMATION_RES),undefined)
+     $(warning Target bootanimation res is undefined, using default bootanimation )
+     PRODUCT_COPY_FILES += vendor/lluvia/media/bootanimation/bootanimation.zip:system/media/bootanimation.zip
+else
+     $(warning Defined bootanimation res is wrong, using default bootanimation )
+     PRODUCT_COPY_FILES += vendor/lluvia/media/bootanimation/bootanimation.zip:system/media/bootanimation.zip
+endif
 
 # Fix Google dialer
 PRODUCT_COPY_FILES += \
