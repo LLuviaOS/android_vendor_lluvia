@@ -14,7 +14,7 @@ except:
     urllib.parse = urlparse
     urllib.request = urllib2
 try:
-    url = "https://raw.githubusercontent.com/LLuviaOS/official_devices/3.0/devices.json"
+    url = "https://raw.githubusercontent.com/LLuviaOS/official_devices/3.0/device.json"
     response = urllib.request.urlopen(url)
     data = json.loads(response.read())
     for res in data:
