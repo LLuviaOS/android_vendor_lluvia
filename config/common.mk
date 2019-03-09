@@ -32,6 +32,11 @@ endif
 # Bootanimation
 $(call inherit-product, vendor/lluvia/config/bootanimation.mk)
 
+# Gapps
+ifeq ($(WITH_GAPPS),true)
+include vendor/gapps/config.mk
+endif
+
 # priv-app permissions
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-aex.xml:system/etc/permissions/privapp-permissions-lluvia.xml
@@ -143,7 +148,7 @@ PRODUCT_COPY_FILES += \
 
 # Turbo
 PRODUCT_PACKAGES += \
-    Turbo \
+    TurboPrebuilt \
     turbo.xml \
     privapp-permissions-turbo.xml
 
