@@ -78,6 +78,11 @@ else
      PRODUCT_COPY_FILES += vendor/lluvia/media/bootanimation/bootanimation.zip:system/media/bootanimation.zip
 endif
 
+# Gapps
+ifeq ($(WITH_GAPPS),true)
+include vendor/gapps/config.mk
+endif
+
 # Fix Google dialer
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/dialer_experience.xml:system/etc/sysconfig/dialer_experience.xml
