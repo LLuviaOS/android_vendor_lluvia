@@ -86,5 +86,5 @@ endif
 
 PRODUCT_GENERIC_PROPERTIES += \
   ro.lluviaos.ota.version_code=$(CUSTOM_OTA_VERSION_CODE)
-
+  sys.ota.disable_uncrypt=1
 endif
