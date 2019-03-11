@@ -31,7 +31,8 @@ endif
 endif
 
 PRODUCT_GENERIC_PROPERTIES += \
-  ro.lluvia.ota.version_code=$(CUSTOM_OTA_VERSION_CODE)
+  ro.lluvia.ota.version_code=$(CUSTOM_OTA_VERSION_CODE) \
+  sys.ota.disable_uncrypt=1
 
 PRODUCT_PACKAGES += \
         Updates
