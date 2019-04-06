@@ -6,7 +6,6 @@ PRODUCT_PACKAGES += \
      LatinIME \
      Launcher3 \
      WallpaperPickerGooglePrebuilt \
-     LLuviaStorm \
      WeatherClient \
      MaterialFXPrebuilt \
      AmbientPlayHistoryProvider
