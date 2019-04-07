@@ -122,11 +122,13 @@ PRODUCT_PACKAGES += \
     DialerThemeBlack \
     FilesThemeBlack \
     WellbeingBlackTheme \
+    UpdatesThemeBlack \
     ContactsThemeDark \
     DialerThemeDark \
     FilesThemeDark \
-    WellbeingDarkTheme 
-
+    WellbeingDarkTheme \
+    UpdatesThemeDark \
+    
 # QS tile styles
 PRODUCT_PACKAGES += \
     QStilesSquare \
