@@ -18,27 +18,13 @@ LLUVIA_VERSION_NUMBER := v3.0
 
 ifndef LLUVIA_BUILD_TYPE
 LLUVIA_BUILD_TYPE := ManMade
-
-PRODUCT_GENERIC_PROPERTIES += \
-    ro.lluvia.buildtype=ManMade
 endif
 
 ifeq ($(LLUVIA_BUILD_TYPE), OFFICIAL)
-    LIST = $(shell curl -s https://raw.githubusercontent.com/LLuviaOS/android_vendor_lluvia/3.0/lluvia.devices)
-    FOUND_DEVICE =  $(filter $(CURRENT_DEVICE), $(LIST))
-    ifeq ($(FOUND_DEVICE),$(CURRENT_DEVICE))
-	LLUVIA_BUILD_TYPE := NatureMade
-	PRODUCT_GENERIC_PROPERTIES += \
-    		ro.lluvia.buildtype=NatureMade
 
-PRODUCT_PACKAGES += \
-        Updates
-	
-    endif
-    ifneq ($(LLUVIA_BUILD_TYPE), NatureMade)
-	LLUVIA_BUILD_TYPE := ManMade
-        $(error Device is not official "$(FOUND)")
-    endif
+# LLuviaOTA
+$(call inherit-product-if-exists, vendor/lluvia/config/ota.mk)
+
 endif
 
 LLUVIA_MOD_VERSION := Crystal
@@ -55,6 +41,7 @@ LLUVIA_FINGERPRINT := LLuviaOS/$(LLUVIA_VERSION_NUMBER)/$(PLATFORM_VERSION)/$(TA
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 PRODUCT_PROPERTY_OVERRIDES += \
+  ro.lluvia.buildtype=$(LLUVIA_BUILD_TYPE) \
   ro.lluvia.version=$(LLUVIA_VERSION) \
   ro.lluvia.releasetype=$(LLUVIA_BUILD_TYPE) \
   ro.modversion=$(LLUVIA_MOD_VERSION)
@@ -65,26 +52,3 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.lluvia.display.version=$(LLUVIA_DISPLAY_VERSION)
   ro.lluvia.fingerprint=$(LLUVIA_FINGERPRINT) \
   ro.lluvia.build_date_utc=$(LLUVIA_BUILD_DATE_UTC)
-
-ifneq ($(IS_GENERIC_SYSTEM_IMAGE), true)
-
-ifeq ($(TARGET_SHIPS_SEPERATE_GAPPS_BUILD), true)
-ifeq ($(WITH_GAPPS), true)
-ifeq ($(IS_GO_VERSION), true)
-CUSTOM_OTA_VERSION_CODE := pie_go_gapps
-else
-CUSTOM_OTA_VERSION_CODE := pie_gapps
-endif
-endif
-else
-ifeq ($(IS_GO_VERSION), true)
-CUSTOM_OTA_VERSION_CODE := pie_go
-else
-CUSTOM_OTA_VERSION_CODE := pie
-endif
-endif
-
-PRODUCT_GENERIC_PROPERTIES += \
-  ro.lluviaos.ota.version_code=$(CUSTOM_OTA_VERSION_CODE)
-  sys.ota.disable_uncrypt=1
-endif
