@@ -199,6 +199,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     vendor/lluvia/config/permissions/backup.xml:system/etc/sysconfig/backup.xml
 
+# Some permissions
+PRODUCT_COPY_FILES += \
+    vendor/lluvia/config/permissions/privapp-permissions-custom.xml:system/etc/permissions/privapp-permissions-custom.xml
+
 # init.d support
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/init.d/00banner:system/etc/init.d/00banner
