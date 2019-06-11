@@ -76,7 +76,7 @@ PRODUCT_PACKAGES += \
     WellbeingPrebuilt \
     Recorder \
     WeatherClient \
-    SubstratumKey
+    SubstratumSignature
 
 
 PRODUCT_COPY_FILES += \
