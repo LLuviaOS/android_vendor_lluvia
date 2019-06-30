@@ -17,8 +17,10 @@
 
 PRODUCT_COPY_FILES_LIST=()
 PRODUCT_COPY_FILES_HASHES=()
+PRODUCT_COPY_FILES_FIXUP_HASHES=()
 PRODUCT_PACKAGES_LIST=()
 PRODUCT_PACKAGES_HASHES=()
+PRODUCT_PACKAGES_FIXUP_HASHES=()
 PACKAGE_LIST=()
 VENDOR_STATE=-1
 VENDOR_RADIO_STATE=-1
@@ -65,15 +67,15 @@ function setup_vendor() {
         exit 1
     fi
 
-    export AOSP_ROOT="$3"
-    if [ ! -d "$AOSP_ROOT" ]; then
-        echo "\$AOSP_ROOT must be set and valid before including this script!"
+    export LLUVIA_ROOT="$3"
+    if [ ! -d "$LLUVIA_ROOT" ]; then
+        echo "\$LLUVIA_ROOT must be set and valid before including this script!"
         exit 1
     fi
 
     export OUTDIR=vendor/"$VENDOR"/"$DEVICE"
-    if [ ! -d "$AOSP_ROOT/$OUTDIR" ]; then
-        mkdir -p "$AOSP_ROOT/$OUTDIR"
+    if [ ! -d "$LLUVIA_ROOT/$OUTDIR" ]; then
+        mkdir -p "$LLUVIA_ROOT/$OUTDIR"
     fi
 
     VNDNAME="$6"
@@ -81,9 +83,9 @@ function setup_vendor() {
         VNDNAME="$DEVICE"
     fi
 
-    export PRODUCTMK="$AOSP_ROOT"/"$OUTDIR"/"$VNDNAME"-vendor.mk
-    export ANDROIDMK="$AOSP_ROOT"/"$OUTDIR"/Android.mk
-    export BOARDMK="$AOSP_ROOT"/"$OUTDIR"/BoardConfigVendor.mk
+    export PRODUCTMK="$LLUVIA_ROOT"/"$OUTDIR"/"$VNDNAME"-vendor.mk
+    export ANDROIDMK="$LLUVIA_ROOT"/"$OUTDIR"/Android.mk
+    export BOARDMK="$LLUVIA_ROOT"/"$OUTDIR"/BoardConfigVendor.mk
 
     if [ "$4" == "true" ] || [ "$4" == "1" ]; then
         COMMON=1
@@ -659,9 +661,14 @@ function parse_file_list() {
         exit 1
     fi
 
-    if [ $# -eq 2 ]; then
+    if [ -n "$2" ]; then
+        echo "Using section \"$2\""
         LIST=$TMPDIR/files.txt
-        cat $1 | sed -n '/# '"$2"'/I,/^\s*$/p' > $LIST
+        # Match all lines starting with first line found to start* with '#'
+        # comment and contain** $2, and ending with first line to be empty*.
+        # *whitespaces (tabs, spaces) at the beginning of lines are discarded
+        # **the $2 match is case-insensitive
+        cat $1 | sed -n '/^[[:space:]]*#.*'"$2"'/I,/^[[:space:]]*$/ p' > $LIST
     else
         LIST=$1
     fi
@@ -669,8 +676,10 @@ function parse_file_list() {
 
     PRODUCT_PACKAGES_LIST=()
     PRODUCT_PACKAGES_HASHES=()
+    PRODUCT_PACKAGES_FIXUP_HASHES=()
     PRODUCT_COPY_FILES_LIST=()
     PRODUCT_COPY_FILES_HASHES=()
+    PRODUCT_COPY_FILES_FIXUP_HASHES=()
 
     while read -r line; do
         if [ -z "$line" ]; then continue; fi
@@ -682,17 +691,23 @@ function parse_file_list() {
         local COUNT=${#SPLIT[@]}
         local SPEC=${SPLIT[0]}
         local HASH="x"
+        local FIXUP_HASH="x"
         if [ "$COUNT" -gt "1" ]; then
             HASH=${SPLIT[1]}
+        fi
+        if [ "$COUNT" -gt "2" ]; then
+            FIXUP_HASH=${SPLIT[2]}
         fi
 
         # if line starts with a dash, it needs to be packaged
         if [[ "$SPEC" =~ ^- ]]; then
             PRODUCT_PACKAGES_LIST+=("${SPEC#-}")
             PRODUCT_PACKAGES_HASHES+=("$HASH")
+            PRODUCT_PACKAGES_FIXUP_HASHES+=("$FIXUP_HASH")
         else
             PRODUCT_COPY_FILES_LIST+=("$SPEC")
             PRODUCT_COPY_FILES_HASHES+=("$HASH")
+            PRODUCT_COPY_FILES_FIXUP_HASHES+=("$FIXUP_HASH")
         fi
 
     done < <(egrep -v '(^#|^[[:space:]]*$)' "$LIST" | LC_ALL=C sort | uniq)
@@ -754,7 +769,9 @@ function get_file() {
         return 1
     else
         # try to copy
-        cp -r "$SRC/$1" "$2" 2>/dev/null && return 0
+        cp -r "$SRC/$1"           "$2" 2>/dev/null && return 0
+        cp -r "$SRC/${1#/system}" "$2" 2>/dev/null && return 0
+        cp -r "$SRC/system/$1"    "$2" 2>/dev/null && return 0
 
         return 1
     fi
@@ -779,16 +796,16 @@ function oat2dex() {
 
     if [ -z "$BAKSMALIJAR" ] || [ -z "$SMALIJAR" ]; then
 
-        export BAKSMALIJAR="$AOSP_ROOT"/vendor/aosp/build/tools/smali/baksmali.jar
-        export SMALIJAR="$AOSP_ROOT"/vendor/aosp/build/tools/smali/smali.jar
+        export BAKSMALIJAR="$LLUVIA_ROOT"/vendor/lluvia/build/tools/smali/baksmali.jar
+        export SMALIJAR="$LLUVIA_ROOT"/vendor/lluvia/build/tools/smali/smali.jar
     fi
 
     if [ -z "$VDEXEXTRACTOR" ]; then
-        export VDEXEXTRACTOR="$AOSP_ROOT"/vendor/aosp/build/tools/"$HOST"/vdexExtractor
+        export VDEXEXTRACTOR="$LLUVIA_ROOT"/vendor/lluvia/build/tools/"$HOST"/vdexExtractor
     fi
 
     if [ -z "$CDEXCONVERTER" ]; then
-        export CDEXCONVERTER="$AOSP_ROOT"/vendor/aosp/build/tools/"$HOST"/compact_dex_converter
+        export CDEXCONVERTER="$LLUVIA_ROOT"/vendor/lluvia/build/tools/"$HOST"/compact_dex_converter
     fi
 
     # Extract existing boot.oats to the temp folder
@@ -796,12 +813,7 @@ function oat2dex() {
         echo "Checking if system is odexed and locating boot.oats..."
         for ARCH in "arm64" "arm" "x86_64" "x86"; do
             mkdir -p "$TMPDIR/system/framework/$ARCH"
-            if [ -d "$SRC/framework" ] && [ "$SRC" != "adb" ]; then
-                ARCHDIR="framework/$ARCH/"
-            else
-                ARCHDIR="system/framework/$ARCH/"
-            fi
-            if get_file "$ARCHDIR" "$TMPDIR/system/framework/" "$SRC"; then
+            if get_file "/system/framework/$ARCH" "$TMPDIR/system/framework/" "$SRC"; then
                 ARCHES+="$ARCH "
             else
                 rmdir "$TMPDIR/system/framework/$ARCH"
@@ -850,7 +862,7 @@ function oat2dex() {
             # try to extract classes.dex from boot.vdex for frameworks jars
             # fallback to boot.oat if vdex is not available
             if get_file "$JARVDEX" "$TMPDIR" "$SRC"; then
-                "$VDEXEXTRACTOR" -o "$TMPDIR/" -i "$TMPDIR/$(basename "$JARVDEX")"
+                "$VDEXEXTRACTOR" -o "$TMPDIR/" -i "$TMPDIR/$(basename "$JARVDEX")" > /dev/null
                 # Check if we have to deal with CompactDex
                 if [ -f "$TMPDIR/$(basename "${JARVDEX%.*}")_classes.cdex" ]; then
                     "$CDEXCONVERTER" "$TMPDIR/$(basename "${JARVDEX%.*}")_classes.cdex" &> /dev/null
@@ -916,33 +928,124 @@ function fix_xml() {
     mv "$TEMP_XML" "$XML"
 }
 
+function get_hash() {
+    local FILE="$1"
+
+    if [ "$(uname)" == "Darwin" ]; then
+        shasum "${FILE}" | awk '{print $1}'
+    else
+        sha1sum "${FILE}" | awk '{print $1}'
+    fi
+}
+
+function print_spec() {
+    local SPEC_PRODUCT_PACKAGE="$1"
+    local SPEC_SRC_FILE="$2"
+    local SPEC_DST_FILE="$3"
+    local SPEC_ARGS="$4"
+    local SPEC_HASH="$5"
+    local SPEC_FIXUP_HASH="$6"
+
+    local PRODUCT_PACKAGE=""
+    if [ ${SPEC_PRODUCT_PACKAGE} = true ]; then
+        PRODUCT_PACKAGE="-"
+    fi
+    local SRC=""
+    if [ ! -z "${SPEC_SRC_FILE}" ] && [ "${SPEC_SRC_FILE}" != "${SPEC_DST_FILE}" ]; then
+        SRC="${SPEC_SRC_FILE}:"
+    fi
+    local DST=""
+    if [ ! -z "${SPEC_DST_FILE}" ]; then
+        DST="${SPEC_DST_FILE}"
+    fi
+    local ARGS=""
+    if [ ! -z "${SPEC_ARGS}" ]; then
+        ARGS=";${SPEC_ARGS}"
+    fi
+    local HASH=""
+    if [ ! -z "${SPEC_HASH}" ] && [ "${SPEC_HASH}" != "x" ]; then
+        HASH="|${SPEC_HASH}"
+    fi
+    local FIXUP_HASH=""
+    if [ ! -z "${SPEC_FIXUP_HASH}" ] && [ "${SPEC_FIXUP_HASH}" != "x" ] && [ "${SPEC_FIXUP_HASH}" != "${SPEC_HASH}" ]; then
+        FIXUP_HASH="|${SPEC_FIXUP_HASH}"
+    fi
+    printf '%s%s%s%s%s%s\n' "${PRODUCT_PACKAGE}" "${SRC}" "${DST}" "${ARGS}" "${HASH}" "${FIXUP_HASH}"
+}
+
+# To be overridden by device-level extract-files.sh
+# Parameters:
+#   $1: spec name of a blob. Can be used for filtering.
+#       If the spec is "src:dest", then $1 is "dest".
+#       If the spec is "src", then $1 is "src".
+#   $2: path to blob file. Can be used for fixups.
+#
+function blob_fixup() {
+    :
+}
+
 #
 # extract:
 #
-# $1: file containing the list of items to extract
+# Positional parameters:
+# $1: file containing the list of items to extract (aka proprietary-files.txt)
 # $2: path to extracted system folder, an ota zip file, or "adb" to extract from device
-# $3: section in list file to extract - optional
+# $3: section in list file to extract - optional. Setting section via $3 is deprecated.
+#
+# Non-positional parameters (coming after $2):
+# --section: preferred way of selecting the portion to parse and extract from
+#            proprietary-files.txt
+# --kang: if present, this option will activate the printing of hashes for the
+#         extracted blobs. Useful with --section for subsequent pinning of
+#         blobs taken from other origins.
 #
 function extract() {
+    # Consume positional parameters
+    local PROPRIETARY_FILES_TXT="$1"; shift
+    local SRC="$1"; shift
+    local SECTION=""
+    local KANG=false
+
+    # Consume optional, non-positional parameters
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+        -s|--section)
+            SECTION="$2"; shift
+            ;;
+        -k|--kang)
+            KANG=true
+            DISABLE_PINNING=1
+            ;;
+        *)
+            # Backwards-compatibility with the old behavior, where $3, if
+            # present, denoted an optional positional ${SECTION} argument.
+            # Users of ${SECTION} are encouraged to migrate from setting it as
+            # positional $3, to non-positional --section ${SECTION}, the
+            # reason being that it doesn't scale to have more than 1 optional
+            # positional argument.
+            SECTION="$1"
+            ;;
+        esac
+        shift
+    done
+
     if [ -z "$OUTDIR" ]; then
         echo "Output dir not set!"
         exit 1
     fi
 
-    if [ -z "$3" ]; then
-        parse_file_list "$1"
-    else
-        parse_file_list "$1" "$3"
-    fi
+    parse_file_list "${PROPRIETARY_FILES_TXT}" "${SECTION}"
 
     # Allow failing, so we can try $DEST and/or $FILE
     set +e
 
     local FILELIST=( ${PRODUCT_COPY_FILES_LIST[@]} ${PRODUCT_PACKAGES_LIST[@]} )
     local HASHLIST=( ${PRODUCT_COPY_FILES_HASHES[@]} ${PRODUCT_PACKAGES_HASHES[@]} )
+    local FIXUP_HASHLIST=( ${PRODUCT_COPY_FILES_FIXUP_HASHES[@]} ${PRODUCT_PACKAGES_FIXUP_HASHES[@]} )
+    local PRODUCT_COPY_FILES_COUNT=${#PRODUCT_COPY_FILES_LIST[@]}
     local COUNT=${#FILELIST[@]}
-    local SRC="$2"
-    local OUTPUT_ROOT="$AOSP_ROOT"/"$OUTDIR"/proprietary
+
+    local OUTPUT_ROOT="$LLUVIA_ROOT"/"$OUTDIR"/proprietary
     local OUTPUT_TMP="$TMPDIR"/"$OUTDIR"/proprietary
 
     if [ "$SRC" = "adb" ]; then
@@ -970,7 +1073,7 @@ function extract() {
             # If OTA is block based, extract it.
             elif [ -a "$DUMPDIR"/system.new.dat ]; then
                 echo "Converting system.new.dat to system.img"
-                python "$AOSP_ROOT"/vendor/aosp/build/tools/sdat2img.py "$DUMPDIR"/system.transfer.list "$DUMPDIR"/system.new.dat "$DUMPDIR"/system.img 2>&1
+                python "$LLUVIA_ROOT"/vendor/lluvia/build/tools/sdat2img.py "$DUMPDIR"/system.transfer.list "$DUMPDIR"/system.new.dat "$DUMPDIR"/system.img 2>&1
                 rm -rf "$DUMPDIR"/system.new.dat "$DUMPDIR"/system
                 mkdir "$DUMPDIR"/system "$DUMPDIR"/tmp
                 echo "Requesting sudo access to mount the system.img"
@@ -994,103 +1097,129 @@ function extract() {
         VENDOR_STATE=1
     fi
 
-    echo "Extracting $COUNT files in $1 from $SRC:"
+    echo "Extracting ${COUNT} files in ${PROPRIETARY_FILES_TXT} from ${SRC}:"
 
     for (( i=1; i<COUNT+1; i++ )); do
 
         local SPEC_SRC_FILE=$(src_file "${FILELIST[$i-1]}")
         local SPEC_DST_FILE=$(target_file "${FILELIST[$i-1]}")
-        local ARGS=$(target_args "${FILELIST[$i-1]}")
-        local OUTPUT_DIR="$OUTPUT_ROOT"
-        local TMP_DIR="$OUTPUT_TMP"
-        local TARGET=
+        local SPEC_ARGS=$(target_args "${FILELIST[$i-1]}")
+        local OUTPUT_DIR=
+        local TMP_DIR=
+        local SRC_FILE=
+        local DST_FILE=
+        local IS_PRODUCT_PACKAGE=false
 
-        if [ "$ARGS" = "rootfs" ]; then
-            TARGET="${SPEC_DST_FILE}"
-            OUTPUT_DIR="$OUTPUT_DIR/rootfs"
-            TMP_DIR="$TMP_DIR/rootfs"
+        # Note: this relies on the fact that the ${FILELIST[@]} array
+        # contains first ${PRODUCT_COPY_FILES_LIST[@]}, then ${PRODUCT_PACKAGES_LIST[@]}.
+        if [ "${i}" -gt "${PRODUCT_COPY_FILES_COUNT}" ]; then
+            IS_PRODUCT_PACKAGE=true
+        fi
+
+        if [ "${SPEC_ARGS}" = "rootfs" ]; then
+            OUTPUT_DIR="${OUTPUT_ROOT}/rootfs"
+            TMP_DIR="${OUTPUT_TMP}/rootfs"
+            SRC_FILE="/${SPEC_SRC_FILE}"
+            DST_FILE="/${SPEC_DST_FILE}"
         else
-            TARGET="system/${SPEC_DST_FILE}"
-            SPEC_SRC_FILE="system/${SPEC_SRC_FILE}"
+            OUTPUT_DIR="${OUTPUT_ROOT}"
+            TMP_DIR="${OUTPUT_TMP}"
+            SRC_FILE="/system/${SPEC_SRC_FILE}"
+            DST_FILE="/system/${SPEC_DST_FILE}"
         fi
 
-        if [ "$SRC" = "adb" ]; then
-            printf '  - %s .. ' "/$TARGET"
-        else
-            printf '  - %s \n' "/$TARGET"
-        fi
-
-        local DIR=$(dirname "${SPEC_DST_FILE}")
-        if [ ! -d "$OUTPUT_DIR/$DIR" ]; then
-            mkdir -p "$OUTPUT_DIR/$DIR"
-        fi
-        local DEST="$OUTPUT_DIR/${SPEC_DST_FILE}"
+        # Strip the file path in the vendor repo of "system", if present
+        local VENDOR_REPO_FILE="$OUTPUT_DIR/${DST_FILE#/system}"
+        local BLOB_DISPLAY_NAME="${DST_FILE#/system/}"
+        mkdir -p $(dirname "${VENDOR_REPO_FILE}")
 
         # Check pinned files
         local HASH="$(echo ${HASHLIST[$i-1]} | awk '{ print tolower($0); }')"
+        local FIXUP_HASH="$(echo ${FIXUP_HASHLIST[$i-1]} | awk '{ print tolower($0); }')"
         local KEEP=""
-        if [ "$DISABLE_PINNING" != "1" ] && [ ! -z "$HASH" ] && [ "$HASH" != "x" ]; then
-            if [ -f "$DEST" ]; then
-                local PINNED="$DEST"
+        if [ "$DISABLE_PINNING" != "1" ] && [ "$HASH" != "x" ]; then
+            if [ -f "${VENDOR_REPO_FILE}" ]; then
+                local PINNED="${VENDOR_REPO_FILE}"
             else
-                local PINNED="$TMP_DIR/${SPEC_DST_FILE}"
+                local PINNED="${TMP_DIR}${DST_FILE#/system}"
             fi
             if [ -f "$PINNED" ]; then
-                if [ "$(uname)" == "Darwin" ]; then
-                    local TMP_HASH=$(shasum "$PINNED" | awk '{print $1}' )
-                else
-                    local TMP_HASH=$(sha1sum "$PINNED" | awk '{print $1}' )
-                fi
-                if [ "$TMP_HASH" = "$HASH" ]; then
+                local TMP_HASH=$(get_hash "${PINNED}")
+                if [ "${TMP_HASH}" = "${HASH}" ] || [ "${TMP_HASH}" = "${FIXUP_HASH}" ]; then
                     KEEP="1"
-                    if [ ! -f "$DEST" ]; then
-                        cp -p "$PINNED" "$DEST"
+                    if [ ! -f "${VENDOR_REPO_FILE}" ]; then
+                        cp -p "$PINNED" "${VENDOR_REPO_FILE}"
                     fi
                 fi
             fi
         fi
 
+        if [ "${KANG}" = false ]; then
+            printf '  - %s\n' "${BLOB_DISPLAY_NAME}"
+        fi
+
         if [ "$KEEP" = "1" ]; then
-            printf '    + (keeping pinned file with hash %s)\n' "$HASH"
-        elif [ "$SRC" = "adb" ]; then
-            # Try Lineage target first
-            adb pull "/$TARGET" "$DEST"
-            # if file does not exist try OEM target
-            if [ "$?" != "0" ]; then
-                adb pull "/${SPEC_SRC_FILE}" "$DEST"
-            fi
+            printf '    + keeping pinned file with hash %s\n' "${HASH}"
         else
-            # Try Lineage target first
-            if [ -f "$SRC/$TARGET" ]; then
-                cp "$SRC/$TARGET" "$DEST"
-            # if file does not exist try OEM target
-            elif [ -f "$SRC/${SPEC_SRC_FILE}" ]; then
-                cp "$SRC/${SPEC_SRC_FILE}" "$DEST"
-            else
-                printf '    !! file not found in source\n'
+            FOUND=false
+            # Try Lineage target first.
+            # Also try to search for files stripped of
+            # the "/system" prefix, if we're actually extracting
+            # from a system image.
+            for CANDIDATE in "${DST_FILE}" "${SRC_FILE}"; do
+                get_file ${CANDIDATE} ${VENDOR_REPO_FILE} ${SRC} && {
+                    FOUND=true
+                    break
+                }
+            done
+
+            if [ "${FOUND}" = false ]; then
+                printf '    !! %s: file not found in source\n' "${BLOB_DISPLAY_NAME}"
+                continue
             fi
         fi
 
-        if [ "$?" == "0" ]; then
-            # Deodex apk|jar if that's the case
-            if [[ "$FULLY_DEODEXED" -ne "1" && "$DEST" =~ .(apk|jar)$ ]]; then
-                oat2dex "$DEST" "${SPEC_SRC_FILE}" "$SRC"
-                if [ -f "$TMPDIR/classes.dex" ]; then
-                    zip -gjq "$DEST" "$TMPDIR/classes.dex"
-                    rm "$TMPDIR/classes.dex"
-                    printf '    (updated %s from odex files)\n' "/${SPEC_SRC_FILE}"
-                fi
-            elif [[ "$DEST" =~ .xml$ ]]; then
-                fix_xml "$DEST"
+        # Blob fixup pipeline has 2 parts: one that is fixed and
+        # one that is user-configurable
+        local PRE_FIXUP_HASH=$(get_hash ${VENDOR_REPO_FILE})
+        # Deodex apk|jar if that's the case
+        if [[ "$FULLY_DEODEXED" -ne "1" && "${VENDOR_REPO_FILE}" =~ .(apk|jar)$ ]]; then
+            oat2dex "${VENDOR_REPO_FILE}" "${SRC_FILE}" "$SRC"
+            if [ -f "$TMPDIR/classes.dex" ]; then
+                zip -gjq "${VENDOR_REPO_FILE}" "$TMPDIR/classes.dex"
+                rm "$TMPDIR/classes.dex"
+                printf '    (updated %s from odex files)\n' "${SRC_FILE}"
             fi
+        elif [[ "${VENDOR_REPO_FILE}" =~ .xml$ ]]; then
+            fix_xml "${VENDOR_REPO_FILE}"
         fi
+        # Now run user-supplied fixup function
+        blob_fixup "${BLOB_DISPLAY_NAME}" "${VENDOR_REPO_FILE}"
+        local POST_FIXUP_HASH=$(get_hash ${VENDOR_REPO_FILE})
 
-        if [ -f "$DEST" ]; then
+        if [ -f "${VENDOR_REPO_FILE}" ]; then
+            local DIR=$(dirname "${VENDOR_REPO_FILE}")
             local TYPE="${DIR##*/}"
             if [ "$TYPE" = "bin" -o "$TYPE" = "sbin" ]; then
-                chmod 755 "$DEST"
+                chmod 755 "${VENDOR_REPO_FILE}"
             else
-                chmod 644 "$DEST"
+                chmod 644 "${VENDOR_REPO_FILE}"
+            fi
+        fi
+
+        if [ "${KANG}" =  true ]; then
+            print_spec "${IS_PRODUCT_PACKAGE}" "${SPEC_SRC_FILE}" "${SPEC_DST_FILE}" "${SPEC_ARGS}" "${PRE_FIXUP_HASH}" "${POST_FIXUP_HASH}"
+        fi
+
+        # Check and print whether the fixup pipeline actually did anything.
+        # This isn't done right after the fixup pipeline because we want this print
+        # to come after print_spec above, when in kang mode.
+        if [ "${PRE_FIXUP_HASH}" != "${POST_FIXUP_HASH}" ]; then
+            printf "    + Fixed up %s\n" "${BLOB_DISPLAY_NAME}"
+            # Now sanity-check the spec for this blob.
+            if [ "${KANG}" = false ] && [ "${FIXUP_HASH}" = "x" ] && [ "${HASH}" != "x" ]; then
+                printf "WARNING: The %s file was fixed up, but it is pinned.\n" ${BLOB_DISPLAY_NAME}
+                printf "This is a mistake and you want to either remove the hash completely, or add an extra one.\n"
             fi
         fi
 
@@ -1120,7 +1249,7 @@ function extract_firmware() {
     local FILELIST=( ${PRODUCT_COPY_FILES_LIST[@]} )
     local COUNT=${#FILELIST[@]}
     local SRC="$2"
-    local OUTPUT_DIR="$AOSP_ROOT"/"$OUTDIR"/radio
+    local OUTPUT_DIR="$LLUVIA_ROOT"/"$OUTDIR"/radio
 
     if [ "$VENDOR_RADIO_STATE" -eq "0" ]; then
         echo "Cleaning firmware output directory ($OUTPUT_DIR).."
