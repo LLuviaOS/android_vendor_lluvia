@@ -1,4 +1,6 @@
-for combo in $(curl -s https://raw.githubusercontent.com/LineageOS/hudson/master/lineage-build-targets | sed -e 's/#.*$//' | grep lineage-15.1 | awk '{printf "lineage_%s-%s\n", $1, $2}')
+for device in $(python vendor/lluvia/tools/get_official_devices.py)
 do
-    add_lunch_combo $combo
+for var in eng user userdebug; do
+add_lunch_combo lluvia_$device-$var
+done
 done
