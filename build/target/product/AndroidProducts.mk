@@ -17,4 +17,5 @@
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/lluvia_arm.mk \
     $(LOCAL_DIR)/lluvia_arm64.mk \
-    $(LOCAL_DIR)/lluvia_x86.mk
+    $(LOCAL_DIR)/lluvia_x86.mk \
+    $(LOCAL_DIR)/lluvia_x86_64.mk

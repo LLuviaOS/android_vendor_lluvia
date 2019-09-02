@@ -1,4 +1,4 @@
-# Copyright (C) 2018 The LineageOS Project
+# Copyright (C) 2018-2019 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 # limitations under the License.
 
 $(call inherit-product, build/target/product/aosp_arm64.mk)
-$(call inherit-product, vendor/lluvia/config/common_full_phone.mk)
+
+include vendor/lluvia/build/target/product/lluvia_generic_target.mk
 
 PRODUCT_NAME := lluvia_arm64
