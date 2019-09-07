@@ -1,3 +1,5 @@
+FROM_SOONG := true
+
 include vendor/lluvia/config/BoardConfigQcom.mk
 
 add_json_str_omitempty = $(if $(strip $(2)),$(call add_json_str, $(1), $(2)))
