@@ -20,5 +20,4 @@ LLUVIA_TARGET_PACKAGE := $(PRODUCT_OUT)/$(LLUVIA_VERSION).zip
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) mv $(INTERNAL_OTA_PACKAGE_TARGET) $(LLUVIA_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(LLUVIA_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(LLUVIA_TARGET_PACKAGE).md5sum
-	$(hide) ./vendor/lluvia/tools/generate_json_build_info.sh $(LLUVIA_TARGET_PACKAGE)
 	@echo "Package Complete: $(LLUVIA_TARGET_PACKAGE)" >&2
