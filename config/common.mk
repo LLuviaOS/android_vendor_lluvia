@@ -134,9 +134,9 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lluvia/overlay
 DEVICE_PACKAGE_OVERLAYS += vendor/lluvia/overlay/common
 
-# SetupWizard overlay
-#PRODUCT_PACKAGES += \
-#    SetupWizardOverlay
+# PixelSetupWizard overlay
+PRODUCT_PACKAGES += \
+    PixelSetupWizardOverlay
 
 # Branding
 include vendor/lluvia/config/version.mk
