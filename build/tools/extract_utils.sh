@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2017-2019 The LineageOS Project
 #           (C) 2018 The PixelExperience Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -908,16 +909,16 @@ function oat2dex() {
     local HOST="$(uname)"
 
     if [ -z "$BAKSMALIJAR" ] || [ -z "$SMALIJAR" ]; then
-        export BAKSMALIJAR="$LLUVIA_ROOT"/vendor/lluvia/build/tools/smali/baksmali.jar
-        export SMALIJAR="$LLUVIA_ROOT"/vendor/lluvia/build/tools/smali/smali.jar
+        export BAKSMALIJAR="$LLUVIA_ROOT"/prebuilts/tools-lluvia/common/smali/baksmali.jar
+        export SMALIJAR="$LLUVIA_ROOT"/prebuilts/tools-lluvia/common/smali/smali.jar
     fi
 
     if [ -z "$VDEXEXTRACTOR" ]; then
-        export VDEXEXTRACTOR="$LLUVIA_ROOT"/vendor/lluvia/build/tools/"$HOST"/vdexExtractor
+        export VDEXEXTRACTOR="$LLUVIA_ROOT"/prebuilts/tools-lluvia/"${HOST,,}"-x86/bin/vdexExtractor
     fi
 
     if [ -z "$CDEXCONVERTER" ]; then
-        export CDEXCONVERTER="$LLUVIA_ROOT"/vendor/lluvia/build/tools/"$HOST"/compact_dex_converter
+        export CDEXCONVERTER="$LLUVIA_ROOT"/prebuilts/tools-lluvia/"${HOST,,}"-x86/bin/compact_dex_converter
     fi
 
     # Extract existing boot.oats to the temp folder
