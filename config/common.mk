@@ -69,11 +69,6 @@ ifeq ($(HOST_OS),linux)
     endif
 endif
 
-# Init
-PRODUCT_COPY_FILES += \
-    vendor/lluvia/prebuilt/common/etc/init.d/00banner:$(TARGET_COPY_OUT_SYSTEM)/etc/init.d/00banner \
-    vendor/lluvia/prebuilt/common/bin/sysinit:$(TARGET_COPY_OUT_SYSTEM)/bin/sysinit
-
 # LatinIME gesture typing
 ifeq ($(TARGET_ARCH),arm64)
 PRODUCT_COPY_FILES += \
