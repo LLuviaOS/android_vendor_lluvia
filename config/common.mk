@@ -64,16 +64,6 @@ PRODUCT_COPY_FILES += \
     vendor/lluvia/config/permissions/privapp-permissions-lluvia.xml:system/etc/permissions/privapp-permissions-lluvia.xml \
     vendor/lluvia/config/permissions/org.lineageos.snap.xml:system/etc/permissions/org.lineageos.snap.xml 
 
-# init.d support
-PRODUCT_COPY_FILES += \
-    vendor/lluvia/prebuilt/common/bin/sysinit:system/bin/sysinit
-
-ifneq ($(TARGET_BUILD_VARIANT),user)
-# userinit support
-PRODUCT_COPY_FILES += \
-    vendor/lluvia/prebuilt/common/etc/init.d/90userinit:system/etc/init.d/90userinit
-endif
-
 # Copy all custom init rc files
 $(foreach f,$(wildcard vendor/lluvia/prebuilt/common/etc/init/*.rc),\
     $(eval PRODUCT_COPY_FILES += $(f):system/etc/init/$(notdir $f)))
