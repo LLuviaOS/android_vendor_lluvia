@@ -60,10 +60,9 @@ endif
 
 # Some permissions
 PRODUCT_COPY_FILES += \
-<<<<<<< HEAD
     vendor/lluvia/config/permissions/backup.xml:system/etc/sysconfig/backup.xml \
     vendor/lluvia/config/permissions/privapp-permissions-lluvia.xml:system/etc/permissions/privapp-permissions-lluvia.xml \
-    vendor/lluvia/config/permissions/org.lineageos.snap.xml:system/etc/permissions/org.lineageos.snap.xml 
+    vendor/lluvia/config/permissions/org.lineageos.snap.xml:system/etc/permissions/org.lineageos.snap.xml \
     vendor/lluvia/config/permissions/privapp-permissions-snap.xml:system/etc/permissions/privapp-permissions-snap.xml \
     vendor/lluvia/config/permissions/privapp-permissions-camera2.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-camera2.xml
 
@@ -74,6 +73,10 @@ $(foreach f,$(wildcard vendor/lluvia/prebuilt/common/etc/init/*.rc),\
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/lib/content-types.properties:system/lib/content-types.properties
+
+# Enable Android Beam on all targets
+PRODUCT_COPY_FILES += \
+    vendor/lluvia/config/permissions/android.software.nfc.beam.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/android.software.nfc.beam.xml
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
