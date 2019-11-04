@@ -24,3 +24,7 @@ LLUVIA_PROPERTIES := \
     org.lluvia.build_date_utc=$(LLUVIA_BUILD_DATE_UTC) \
     org.lluvia.build_type=$(LLUVIA_BUILD_TYPE) \
     org.lluvia.fingerprint=$(LLUVIA_FINGERPRINT)
+
+ifeq ($(LLUVIA_BUILD_TYPE), OFFICIAL)
+PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/secure/releasekey
+endif
