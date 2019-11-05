@@ -44,8 +44,8 @@ DEBUG = False
 default_manifest = ".repo/manifest.xml"
 
 default_manifest = ".repo/manifests/llui_default.xml"
+lluvia_default_revision =  os.getenv('ROOMSERVICE_DEFAULT_BRANCH', 'LL-4.X')
 lluvia_local_manifest = ".repo/local_manifests/llui_manifest.xml"
-lluvia_default_revision = "LL-4.X"
 lluvia_dependencies = "lluvia.dependencies"
 org_manifest = "devices"  # leave empty if org is provided in manifest
 org_display = "LLuviaDevices"  # needed for displaying
