@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aosip.support.colorpicker;
+package com.lluvia.support.colorpicker;
 
 import android.content.Context;
 import android.graphics.Canvas;

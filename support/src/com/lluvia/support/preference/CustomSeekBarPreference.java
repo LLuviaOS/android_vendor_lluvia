@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package com.aosip.support.preference;
+package com.lluvia.support.preference;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,7 +33,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.preference.*;
 
-import com.aosip.support.R;
+import com.lluvia.support.R;
 
 public class CustomSeekBarPreference extends Preference implements SeekBar.OnSeekBarChangeListener {
     private final String TAG = getClass().getName();

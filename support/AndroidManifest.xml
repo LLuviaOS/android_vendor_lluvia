@@ -16,7 +16,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aosip.support">
+    package="com.lluvia.support">
 
     <uses-sdk
         android:minSdkVersion="27" />

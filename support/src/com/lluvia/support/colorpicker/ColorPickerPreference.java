@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.aosip.support.colorpicker;
+package com.lluvia.support.colorpicker;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -37,7 +37,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.aosip.support.R;
+import com.lluvia.support.R;
 
 /**
  * A preference type that allows a user to choose a time

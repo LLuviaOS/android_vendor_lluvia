@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.aosip.support.colorpicker;
+package com.lluvia.support.colorpicker;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.aosip.support.preference;
+package com.lluvia.support.preference;
 
 import android.content.ContentResolver;
 import android.preference.PreferenceDataStore;

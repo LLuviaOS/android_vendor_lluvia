@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.aosip.support.preference;
+package com.lluvia.support.preference;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +37,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
-import com.aosip.support.R;
+import com.lluvia.support.R;
 
 public class PackageListAdapter extends BaseAdapter implements Runnable {
     private PackageManager mPm;
