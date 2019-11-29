@@ -60,9 +60,12 @@ endif
 
 # Some permissions
 PRODUCT_COPY_FILES += \
+<<<<<<< HEAD
     vendor/lluvia/config/permissions/backup.xml:system/etc/sysconfig/backup.xml \
     vendor/lluvia/config/permissions/privapp-permissions-lluvia.xml:system/etc/permissions/privapp-permissions-lluvia.xml \
     vendor/lluvia/config/permissions/org.lineageos.snap.xml:system/etc/permissions/org.lineageos.snap.xml 
+    vendor/lluvia/config/permissions/privapp-permissions-snap.xml:system/etc/permissions/privapp-permissions-snap.xml \
+    vendor/lluvia/config/permissions/privapp-permissions-camera2.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-camera2.xml
 
 # Copy all custom init rc files
 $(foreach f,$(wildcard vendor/lluvia/prebuilt/common/etc/init/*.rc),\
