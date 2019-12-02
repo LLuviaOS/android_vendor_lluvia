@@ -2,9 +2,9 @@ ifeq ($(LLUVIA_BUILD_TYPE), OFFICIAL)
 
 LLUVIA_OTA_VERSION_CODE := 4.1
 
+
 LLUVIA_PROPERTIES += \
-    org.lluvia.ota.version_code=$(LLUVIA_OTA_VERSION_CODE) \
-    sys.ota.disable_uncrypt=1
+    org.lluvia.ota.version_code=$(LLUVIA_OTA_VERSION_CODE)
 
 PRODUCT_PACKAGES += \
     Updates
