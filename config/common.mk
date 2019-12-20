@@ -106,8 +106,5 @@ include vendor/lluvia/config/fonts.mk
 # Packages
 include vendor/lluvia/config/packages.mk
 
-# Themes
-#include vendor/lluvia/config/themes.mk
-
 # Versioning
 include vendor/lluvia/config/version.mk
