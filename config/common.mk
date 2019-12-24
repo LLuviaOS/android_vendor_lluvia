@@ -95,5 +95,8 @@ include vendor/lluvia/config/packages.mk
 # Prebuilts
 $(call inherit-product-if-exists, vendor/prebuilts/packages.mk)
 
+# Themes
+include vendor/lluvia/config/accents.mk
+
 # Versioning
 include vendor/lluvia/config/version.mk
