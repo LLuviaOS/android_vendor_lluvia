@@ -82,7 +82,8 @@ endif
 
 # Permissions
 PRODUCT_COPY_FILES += \
-    vendor/lluvia/prebuilt/common/etc/permissions/lluvia-privapp-permissions.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/lluvia-privapp-permissions.xml \
+    vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-lluvia-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-lluvia.xml \
+    vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-lluvia.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lluvia.xml \
     vendor/lluvia/prebuilt/common/etc/permissions/org.pixelexperience.weather.client.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/org.pixelexperience.weather.client.xml \
     vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-elgoog.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-elgoog.xml
 
