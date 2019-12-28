@@ -49,8 +49,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/sysconfig/lluvia-power-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/lluvia-power-whitelist.xml \
     vendor/lluvia/prebuilt/common/etc/sysconfig/dialer_experience.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/dialer_experience.xml \
-    vendor/lluvia/prebuilt/common/etc/sysconfig/turbo.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/turbo.xml \
-    vendor/lluvia/prebuilt/common/etc/sysconfig/org.pixelexperience.weather.client-default.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/default-permissions/org.pixelexperience.weather.client.xml
+    vendor/lluvia/prebuilt/common/etc/sysconfig/turbo.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/turbo.xml
 
 # Copy all lluvia-specific init rc files
 $(foreach f,$(wildcard vendor/lluvia/prebuilt/common/etc/init/*.rc),\
@@ -77,8 +76,6 @@ endif
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-lluvia-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-lluvia.xml \
     vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-lluvia.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lluvia.xml \
-    vendor/lluvia/prebuilt/common/etc/permissions/org.pixelexperience.weather.client.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/org.pixelexperience.weather.client.xml \
-    vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-elgoog.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-elgoog.xml
 
 # Strip the local variable table and the local variable type table to reduce
 # the size of the system image. This has no bearing on stack traces, but will
