@@ -65,6 +65,7 @@ PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
 PRODUCT_COPY_FILES += \
     vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-lluvia-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-lluvia.xml \
     vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-lluvia.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-lluvia.xml \
+    vendor/lluvia/prebuilt/common/etc/permissions/privapp-permissions-elgoog.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-elgoog.xml
 
 # Strip the local variable table and the local variable type table to reduce
 # the size of the system image. This has no bearing on stack traces, but will
