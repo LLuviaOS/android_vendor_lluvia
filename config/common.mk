@@ -92,5 +92,8 @@ include vendor/lluvia/config/sounds.mk
 # Packages
 include vendor/lluvia/config/packages.mk
 
+# Prebuilts
+$(call inherit-product-if-exists, vendor/prebuilts/packages.mk)
+
 # Versioning
 include vendor/lluvia/config/version.mk
