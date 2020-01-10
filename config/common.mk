@@ -143,4 +143,7 @@ include vendor/lluvia/config/ota.mk
 # GApps
 include vendor/gapps/config.mk
 
+# Customization
+include vendor/google/customization/config.mk
+
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
