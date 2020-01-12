@@ -74,29 +74,11 @@ PRODUCT_COPY_FILES += \
 # leave less information available via JDWP.
 PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
 
-# Common overlay
-PRODUCT_PACKAGE_OVERLAYS += vendor/lluvia/overlay/common
-
-# Disable vendor restrictions
-PRODUCT_RESTRICT_VENDOR_FILES := false
-
-# Bootanimation
-include vendor/lluvia/config/bootanimation.mk
-
-# GSans font
-include vendor/lluvia/config/fonts.mk
-
-# Pixel sounds
-include vendor/lluvia/config/sounds.mk
-
 # Packages
 include vendor/lluvia/config/packages.mk
 
-# Prebuilts
-$(call inherit-product-if-exists, vendor/prebuilts/packages.mk)
-
-# Themes
-include vendor/lluvia/config/accents.mk
+# Overlays
+include vendor/overlay/overlays.mk
 
 # Versioning
 include vendor/lluvia/config/version.mk

@@ -5,5 +5,5 @@ $(call inherit-product, vendor/lluvia/config/common.mk)
 PRODUCT_PACKAGES += \
     LatinIME
 
-# Include lluvia LatinIME dictionaries
-PRODUCT_PACKAGE_OVERLAYS += vendor/lluvia/overlay/dictionaries
+# Include LLuvia LatinIME dictionaries
+PRODUCT_PACKAGE_OVERLAYS += vendor/overlay/dictionaries
