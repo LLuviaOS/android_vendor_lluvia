@@ -1,21 +1,21 @@
 #----------------------------------------------------------------------
 # Generate device tree image (dt.img)
 #----------------------------------------------------------------------
-ifeq ($(strip $(BOARD_CUSTOM_BOOTIMG_MK)),)
+ifeq ($(strip $(BOARD_LLUVIA_BOOTIMG_MK)),)
 ifeq ($(strip $(BOARD_KERNEL_SEPARATED_DT)),true)
 INSTALLED_DTIMAGE_TARGET := $(PRODUCT_OUT)/dt.img
 
 ifeq ($(strip $(BOARD_KERNEL_PREBUILT_DT)),)
 
-ifeq ($(strip $(TARGET_CUSTOM_DTBTOOL)),)
+ifeq ($(strip $(TARGET_LLUVIA_DTBTOOL)),)
 DTBTOOL_NAME := dtbToolLineage
 else
-DTBTOOL_NAME := $(TARGET_CUSTOM_DTBTOOL)
+DTBTOOL_NAME := $(TARGET_LLUVIA_DTBTOOL)
 endif
 
 DTBTOOL := $(HOST_OUT_EXECUTABLES)/$(DTBTOOL_NAME)$(HOST_EXECUTABLE_SUFFIX)
 
-ifeq ($(strip $(TARGET_CUSTOM_DTBTOOL)),)
+ifeq ($(strip $(TARGET_LLUVIA_DTBTOOL)),)
 # dtbToolLineage will search subdirectories
 possible_dtb_dirs = $(KERNEL_OUT)/arch/$(KERNEL_ARCH)/boot/
 else

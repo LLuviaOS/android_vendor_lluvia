@@ -1,13 +1,13 @@
-include vendor/aosp/config/BoardConfigKernel.mk
+include vendor/lluvia/config/BoardConfigKernel.mk
 
 ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
-include vendor/aosp/config/BoardConfigQcom.mk
+include vendor/lluvia/config/BoardConfigQcom.mk
 else
 
 ifneq ($(FORCE_QCOM_DISPLAY_HAL_VARIANT),)
-include vendor/aosp/config/BoardConfigQcomDisplayOverride.mk
+include vendor/lluvia/config/BoardConfigQcomDisplayOverride.mk
 endif
 
 endif
 
-include vendor/aosp/config/BoardConfigSoong.mk
+include vendor/lluvia/config/BoardConfigSoong.mk

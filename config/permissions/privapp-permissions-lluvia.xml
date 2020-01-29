@@ -41,4 +41,15 @@
         <permission name="android.permission.MODIFY_DAY_NIGHT_MODE"/>
     </privapp-permissions>
 
+    <permissions>
+    <privapp-permissions package="com.android.systemui">
+        <permission name="lineageos.permission.HARDWARE_ABSTRACTION_ACCESS" />
+        <permission name="lineageos.permission.MANAGE_LIVEDISPLAY" />
+    </privapp-permissions>
+
+    <privapp-permissions package="com.android.settings">
+        <permission name="lineageos.permission.HARDWARE_ABSTRACTION_ACCESS" />
+        <permission name="lineageos.permission.MANAGE_LIVEDISPLAY" />
+    </privapp-permissions>
+
 </permissions>

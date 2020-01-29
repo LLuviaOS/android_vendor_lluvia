@@ -1,15 +1,15 @@
-ifeq ($(CUSTOM_BUILD_TYPE), OFFICIAL)
+ifeq ($(LLUVIA_BUILD_TYPE), OFFICIAL)
 
-CUSTOM_OTA_VERSION_CODE := ten
+LLUVIA_OTA_VERSION_CODE := 4.1
 
-CUSTOM_PROPERTIES += \
-    org.pixelexperience.ota.version_code=$(CUSTOM_OTA_VERSION_CODE) \
+LLUVIA_PROPERTIES += \
+    org.lluvia.ota.version_code=$(LLUVIA_OTA_VERSION_CODE) \
     sys.ota.disable_uncrypt=1
 
 PRODUCT_PACKAGES += \
     Updates
 
 PRODUCT_COPY_FILES += \
-    vendor/aosp/config/permissions/org.pixelexperience.ota.xml:system/etc/permissions/org.pixelexperience.ota.xml
+    vendor/lluvia/config/permissions/org.lluvia.ota.xml:system/etc/permissions/org.lluvia.ota.xml
 
 endif

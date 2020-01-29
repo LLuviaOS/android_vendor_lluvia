@@ -1,9 +1,9 @@
-include vendor/aosp/config/BoardConfigQcom.mk
+include vendor/lluvia/config/BoardConfigQcom.mk
 
 add_json_str_omitempty = $(if $(strip $(2)),$(call add_json_str, $(1), $(2)))
 add_json_val_default = $(call add_json_val, $(1), $(if $(strip $(2)), $(2), $(3)))
 
-_contents := $(_contents)    "Aosp":{$(newline)
+_contents := $(_contents)    "Lluvia":{$(newline)
 
 # See build/core/soong_config.mk for the add_json_* functions you can use here.
 $(call add_json_str_omitempty, Additional_gralloc_10_usage_bits, $(TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS))

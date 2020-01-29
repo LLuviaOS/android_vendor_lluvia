@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-CUSTOM_TARGET_PACKAGE := $(PRODUCT_OUT)/$(CUSTOM_VERSION).zip
+LLUVIA_TARGET_PACKAGE := $(PRODUCT_OUT)/$(LLUVIA_VERSION).zip
 
 .PHONY: bacon
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
-	$(hide) mv $(INTERNAL_OTA_PACKAGE_TARGET) $(CUSTOM_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(CUSTOM_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(CUSTOM_TARGET_PACKAGE).md5sum
-	$(hide) ./vendor/aosp/tools/generate_json_build_info.sh $(CUSTOM_TARGET_PACKAGE)
-	@echo "Package Complete: $(CUSTOM_TARGET_PACKAGE)" >&2
+	$(hide) mv $(INTERNAL_OTA_PACKAGE_TARGET) $(LLUVIA_TARGET_PACKAGE)
+	$(hide) $(MD5SUM) $(LLUVIA_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(LLUVIA_TARGET_PACKAGE).md5sum
+	$(hide) ./vendor/lluvia/tools/generate_json_build_info.sh $(LLUVIA_TARGET_PACKAGE)
+	@echo "Package Complete: $(LLUVIA_TARGET_PACKAGE)" >&2

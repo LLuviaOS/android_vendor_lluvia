@@ -43,11 +43,12 @@ except ImportError:
 DEBUG = False
 default_manifest = ".repo/manifest.xml"
 
-custom_local_manifest = ".repo/local_manifests/pixel.xml"
-custom_default_revision = "ten"
-custom_dependencies = "aosp.dependencies"
-org_manifest = "pixel-devices"  # leave empty if org is provided in manifest
-org_display = "PixelExperience-Devices"  # needed for displaying
+default_manifest = ".repo/manifests/llui_default.xml"
+lluvia_local_manifest = ".repo/local_manifests/llui_manifest.xml"
+lluvia_default_revision = "LL-4.X"
+lluvia_dependencies = "lluvia.dependencies"
+org_manifest = "devices"  # leave empty if org is provided in manifest
+org_display = "LLuviaDevices"  # needed for displaying
 
 github_auth = None
 
@@ -121,7 +122,7 @@ def get_remote(manifest=None, remote_name=None):
 
 
 def get_revision(manifest=None, p="build"):
-    return custom_default_revision
+    return lluvia_default_revision
     m = manifest or load_manifest(default_manifest)
     project = None
     for proj in m.findall('project'):
@@ -134,13 +135,13 @@ def get_revision(manifest=None, p="build"):
     remote = get_remote(manifest=m, remote_name=project.get('remote'))
     revision = remote.get('revision')
     if not revision:
-        return custom_default_revision
+        return lluvia_default_revision
     return revision.replace('refs/heads/', '').replace('refs/tags/', '')
 
 
 def get_from_manifest(device_name):
-    if os.path.exists(custom_local_manifest):
-        man = load_manifest(custom_local_manifest)
+    if os.path.exists(lluvia_local_manifest):
+        man = load_manifest(lluvia_local_manifest)
         for local_path in man.findall("project"):
             lp = local_path.get("path").strip('/')
             if lp.startswith("device/") and lp.endswith("/" + device_name):
@@ -149,7 +150,7 @@ def get_from_manifest(device_name):
 
 
 def is_in_manifest(project_path):
-    for man in (custom_local_manifest, default_manifest):
+    for man in (lluvia_local_manifest, default_manifest):
         man = load_manifest(man)
         for local_path in man.findall("project"):
             if local_path.get("path") == project_path:
@@ -158,7 +159,7 @@ def is_in_manifest(project_path):
 
 
 def add_to_manifest(repos, fallback_branch=None):
-    lm = load_manifest(custom_local_manifest)
+    lm = load_manifest(lluvia_local_manifest)
 
     for repo in repos:
         repo_name = repo['repository']
@@ -166,7 +167,7 @@ def add_to_manifest(repos, fallback_branch=None):
 	if 'branch' in repo:
 	    repo_branch=repo['branch']
 	else:
-	    repo_branch=custom_default_revision
+	    repo_branch=lluvia_default_revision
 	if 'remote' in repo:
 	    repo_remote=repo['remote']
 	elif "/" not in repo_name:
@@ -204,7 +205,7 @@ def add_to_manifest(repos, fallback_branch=None):
     raw_xml = "\n".join(('<?xml version="1.0" encoding="UTF-8"?>',
                          ElementTree.tostring(lm).decode()))
 
-    f = open(custom_local_manifest, 'w')
+    f = open(lluvia_local_manifest, 'w')
     f.write(raw_xml)
     f.close()
 
@@ -219,7 +220,7 @@ def fetch_dependencies(repo_path, fallback_branch=None):
 
     print('Looking for dependencies')
 
-    dep_p = '/'.join((repo_path, custom_dependencies))
+    dep_p = '/'.join((repo_path, lluvia_dependencies))
     if os.path.exists(dep_p):
         with open(dep_p) as dep_f:
             dependencies = json.load(dep_f)
@@ -234,7 +235,7 @@ def fetch_dependencies(repo_path, fallback_branch=None):
         if not is_in_manifest(dependency['target_path']):
             if not dependency.get('branch'):
                 dependency['branch'] = (get_revision() or
-                                        custom_default_revision)
+                                        lluvia_default_revision)
 
             fetch_list.append(dependency)
             syncable_repos.append(dependency['target_path'])
@@ -280,10 +281,10 @@ def detect_revision(repo):
             print("Using fallback branch: %s" % fallback)
             return fallback
 
-    if has_branch(result, custom_default_revision):
-        print("Falling back to custom revision: %s"
-              % custom_default_revision)
-        return custom_default_revision
+    if has_branch(result, lluvia_default_revision):
+        print("Falling back to lluvia revision: %s"
+              % lluvia_default_revision)
+        return lluvia_default_revision
 
     print("Branches found:")
     for branch in result:
@@ -362,7 +363,7 @@ def main():
     print("Repository for %s not found in the %s Github repository list."
           % (device, org_display))
     print("If this is in error, you may need to manually add it to your "
-          "%s" % custom_local_manifest)
+          "%s" % lluvia_local_manifest)
 
 if __name__ == "__main__":
     main()

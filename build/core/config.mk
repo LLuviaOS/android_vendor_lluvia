@@ -1,4 +1,4 @@
-BUILD_RRO_SYSTEM_PACKAGE := $(TOPDIR)vendor/aosp/build/core/system_rro.mk
+BUILD_RRO_SYSTEM_PACKAGE := $(TOPDIR)vendor/lluvia/build/core/system_rro.mk
 
 # Rules for QCOM targets
-include $(TOPDIR)vendor/aosp/build/core/qcom_target.mk
+include $(TOPDIR)vendor/lluvia/build/core/qcom_target.mk
