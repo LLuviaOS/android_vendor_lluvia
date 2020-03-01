@@ -1,3 +1,8 @@
+# APEX
+ifneq ($(filter Alpha Beta CI Official,$(LLUVIA_BUILDTYPE)),)
+    TARGET_FLATTEN_APEX := true
+endif
+
 include vendor/lluvia/config/BoardConfigKernel.mk
 
 ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
