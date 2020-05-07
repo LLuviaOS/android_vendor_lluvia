@@ -1,4 +1,4 @@
-function __print_aosip_functions_help() {
+function __print_lluvia_functions_help() {
 cat <<EOF
 Invoke ". build/envsetup.sh" from your shell to add the following functions to your environment:
 - lunch:     lunch <product_name>-<build_variant>
@@ -10,7 +10,7 @@ EOF
     local T=$(gettop)
     local A=""
     local i
-    for i in `cat $T/vendor/aosip/build/envsetup.sh | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do
+    for i in `cat $T/vendor/lluvia/build/envsetup.sh | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do
       A="$A $i"
     done
     echo $A
@@ -48,7 +48,7 @@ function mk_timer()
 function repopick()
 {
     T=$(gettop)
-    $T/vendor/aosip/build/tools/repopick.py $@
+    $T/vendor/lluvia/build/tools/repopick.py $@
 }
 
 function gerrit()
@@ -84,7 +84,7 @@ function fixup_common_out_dir() {
     common_out_dir=$(get_build_var OUT_DIR)/target/common
     target_device=$(get_build_var TARGET_DEVICE)
     common_target_out=common-${target_device}
-    if [ ! -z $AOSIP_FIXUP_COMMON_OUT ]; then
+    if [ ! -z $LLUVIA_FIXUP_COMMON_OUT ]; then
         if [ -d ${common_out_dir} ] && [ ! -L ${common_out_dir} ]; then
             mv ${common_out_dir} ${common_out_dir}-${target_device}
             ln -s ${common_target_out} ${common_out_dir}

@@ -1,14 +1,14 @@
 bootstrap_go_package {
-    name: "soong-aosip",
-    pkgPath: "aosip/soong/android",
+    name: "soong-lluvia",
+    pkgPath: "lluvia/soong/android",
     srcs: [
         "android/variable.go",
     ],
 }
 
 bootstrap_go_package {
-    name: "soong-aosip-generator",
-    pkgPath: "aosip/soong/generator",
+    name: "soong-lluvia-generator",
+    pkgPath: "lluvia/soong/generator",
     deps: [
         "blueprint",
         "blueprint-pathtools",
@@ -23,7 +23,7 @@ bootstrap_go_package {
     pluginFor: ["soong_build"],
 }
 
-aosip_generator {
+lluvia_generator {
     name: "generated_kernel_includes",
 
     // The headers make command

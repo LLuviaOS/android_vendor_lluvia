@@ -13,6 +13,6 @@
 # limitations under the License.
 
 $(call inherit-product, build/target/product/aosp_arm64.mk)
-$(call inherit-product, vendor/aosip/config/common_full_phone.mk)
+$(call inherit-product, vendor/lluvia/config/common_full_phone.mk)
 
-PRODUCT_NAME := aosip_arm64
+PRODUCT_NAME := lluvia_arm64

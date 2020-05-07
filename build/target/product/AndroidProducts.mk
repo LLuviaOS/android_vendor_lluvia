@@ -15,6 +15,6 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosip_arm.mk \
-    $(LOCAL_DIR)/aosip_arm64.mk \
-    $(LOCAL_DIR)/aosip_x86.mk
+    $(LOCAL_DIR)/lluvia_arm.mk \
+    $(LOCAL_DIR)/lluvia_arm64.mk \
+    $(LOCAL_DIR)/lluvia_x86.mk

@@ -1,9 +1,9 @@
-# Inherit common AOSiP stuff
-$(call inherit-product, vendor/aosip/config/common.mk)
+# Inherit common lluvia stuff
+$(call inherit-product, vendor/lluvia/config/common.mk)
 
 # Required packages
 PRODUCT_PACKAGES += \
     LatinIME
 
-# Include AOSiP LatinIME dictionaries
-PRODUCT_PACKAGE_OVERLAYS += vendor/aosip/overlay/dictionaries
+# Include lluvia LatinIME dictionaries
+PRODUCT_PACKAGE_OVERLAYS += vendor/lluvia/overlay/dictionaries

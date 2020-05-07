@@ -6,12 +6,12 @@ import (
 	"android/soong/android"
 )
 
-func aosipExpandVariables(ctx android.ModuleContext, in string) string {
-	aosipVars := ctx.Config().VendorConfig("aosipVarsPlugin")
+func lluviaExpandVariables(ctx android.ModuleContext, in string) string {
+	lluviaVars := ctx.Config().VendorConfig("lluviaVarsPlugin")
 
 	out, err := android.Expand(in, func(name string) (string, error) {
-		if aosipVars.IsSet(name) {
-			return aosipVars.String(name), nil
+		if lluviaVars.IsSet(name) {
+			return lluviaVars.String(name), nil
 		}
 		// This variable is not for us, restore what the original
 		// variable string will have looked like for an Expand

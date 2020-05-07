@@ -9,10 +9,10 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := apns-conf.xml
 LOCAL_MODULE_CLASS := ETC
 
-DEFAULT_APNS_FILE := vendor/aosip/prebuilt/common/etc/apns-conf.xml
+DEFAULT_APNS_FILE := vendor/lluvia/prebuilt/common/etc/apns-conf.xml
 
 ifdef CUSTOM_APNS_FILE
-CUSTOM_APNS_SCRIPT := vendor/aosip/prebuilt/common/tools/custom_apns.py
+CUSTOM_APNS_SCRIPT := vendor/lluvia/prebuilt/common/tools/custom_apns.py
 FINAL_APNS_FILE := $(local-generated-sources-dir)/apns-conf.xml
 
 $(FINAL_APNS_FILE): PRIVATE_SCRIPT := $(CUSTOM_APNS_SCRIPT)

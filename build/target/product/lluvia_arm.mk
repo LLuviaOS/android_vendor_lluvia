@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, build/target/product/aosp_x86.mk)
-$(call inherit-product, vendor/aosip/config/common_full_phone.mk)
+$(call inherit-product, build/target/product/aosp_arm.mk)
+$(call inherit-product, vendor/lluvia/config/common_full_phone.mk)
 
 TARGET_USES_64_BIT_BINDER := true
 
-PRODUCT_NAME := aosip_x86
+PRODUCT_NAME := lluvia_arm

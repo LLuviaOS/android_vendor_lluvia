@@ -30,11 +30,11 @@ import urllib.request
 DEBUG = False
 default_manifest = ".repo/manifest.xml"
 
-custom_local_manifest = ".repo/local_manifests/aosip_manifest.xml"
-custom_default_revision = "ten"
-custom_dependencies = "aosip.dependencies"
+custom_local_manifest = ".repo/local_manifests/lluvia_manifest.xml"
+custom_default_revision = "LL-4.X"
+custom_dependencies = "lluvia.dependencies"
 org_manifest = "devices"  # leave empty if org is provided in manifest
-org_display = "AOSiP-Devices"  # needed for displaying
+org_display = "LLUVIA-Devices"  # needed for displaying
 
 github_auth = None
 

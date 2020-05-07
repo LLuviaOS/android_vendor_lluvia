@@ -19,6 +19,6 @@ SELINUX_IGNORE_NEVERALLOWS := true
 endif
 
 # Rules for QCOM targets
-include $(TOPDIR)vendor/aosip/build/core/qcom_target.mk
+include $(TOPDIR)vendor/lluvia/build/core/qcom_target.mk
 
-BUILD_RRO_SYSTEM_PACKAGE := $(TOP)/vendor/aosip/build/core/system_rro.mk
+BUILD_RRO_SYSTEM_PACKAGE := $(TOP)/vendor/lluvia/build/core/system_rro.mk

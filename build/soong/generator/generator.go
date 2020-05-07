@@ -29,7 +29,7 @@ import (
 )
 
 func init() {
-	android.RegisterModuleType("aosip_generator", GeneratorFactory)
+	android.RegisterModuleType("lluvia_generator", GeneratorFactory)
 
 	pctx.HostBinToolVariable("sboxCmd", "sbox")
 }
@@ -214,12 +214,12 @@ func (g *Module) GenerateAndroidBuildActions(ctx android.ModuleContext) {
 	if depRoot == "" {
 		depRoot = ctx.ModuleDir()
 	} else {
-		depRoot = aosipExpandVariables(ctx, depRoot)
+		depRoot = lluviaExpandVariables(ctx, depRoot)
 	}
 
 	// Glob dep_files property
 	for _, dep_file := range g.properties.Dep_files {
-		dep_file = aosipExpandVariables(ctx, dep_file)
+		dep_file = lluviaExpandVariables(ctx, dep_file)
 		globPath := filepath.Join(depRoot, dep_file)
 		paths, err := ctx.GlobWithDeps(globPath, nil)
 		if err != nil {
@@ -231,7 +231,7 @@ func (g *Module) GenerateAndroidBuildActions(ctx android.ModuleContext) {
 		}
 	}
 
-	cmd := aosipExpandVariables(ctx, String(g.properties.Cmd))
+	cmd := lluviaExpandVariables(ctx, String(g.properties.Cmd))
 
 	rawCommand, err := android.Expand(cmd, func(name string) (string, error) {
 		switch name {
